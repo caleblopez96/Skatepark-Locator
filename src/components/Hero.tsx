@@ -13,11 +13,11 @@ import "swiper/css/pagination";
 
 export default function Hero() {
     return (
-        <section id="home" className="w-full bg-gray-900 text-white py-20 px-6 md:px-12">
+        <section id="home" className="w-full bg-gray-900 text-white py-30 px-6 md:px-12">
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
                 {/* left */}
                 <div className="space-y-6">
-                    <h1 className="text-4xl md:text-5xl font-bold leading-tight">Find Skateparks Near You</h1>
+                    <h1 className="text-5xl md:text-6xl font-bold leading-tight">Find Skateparks Near You</h1>
 
                     <p className="text-gray-300 text-lg md:text-xl max-w-md">
                         Discover the best skateparks in Phoenix, check bike-friendly parks, see today’s weather, and build your favorites
@@ -25,8 +25,9 @@ export default function Hero() {
                     </p>
 
                     <a
-                        href="#skateparks"
-                        className="inline-block bg-blue-500 hover:bg-blue-600 transition-colors px-6 py-3 rounded-lg font-medium text-lg"
+                        id="locator"
+                        href="#allParks"
+                        className="inline-block bg-gray-200 text-gray-800 transition-colors px-6 py-3 rounded-lg font-medium text-lg hover:scale-105"
                     >
                         Explore Parks
                     </a>

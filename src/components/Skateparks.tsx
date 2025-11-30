@@ -132,7 +132,9 @@ export default function Skateparks() {
                 <span className="text-gray-900">🔴 = No Bikes</span>
                 <Map />
 
-                <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 text-center">All Parks</h3>
+                <h3 id="allParks" className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-20">
+                    All Parks
+                </h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {currentParks.map((park) => (
                         <div
@@ -200,7 +202,7 @@ export default function Skateparks() {
                     <button
                         onClick={handlePreviousPage}
                         disabled={currentPage === 1}
-                        className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-lg transition"
+                        className="px-4 py-2 bg-gray-800 hover:scale-105 text-white rounded-lg transition hover:cursor-pointer"
                     >
                         Previous
                     </button>
@@ -210,7 +212,7 @@ export default function Skateparks() {
                     <button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-lg transition"
+                        className="px-4 py-2 bg-gray-800 hover:scale-105 text-white rounded-lg transition hover:cursor-pointer"
                     >
                         Next
                     </button>
