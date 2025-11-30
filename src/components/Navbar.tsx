@@ -15,9 +15,7 @@ const Navbar = () => {
                     const { latitude, longitude } = position.coords;
                     try {
                         const response = await fetch(
-                            `https://api.allorigins.win/raw?url=${encodeURIComponent(
-                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-                            )}`
+                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
                         );
                         const data = await response.json();
                         const userZip = data.address?.postcode || "";
