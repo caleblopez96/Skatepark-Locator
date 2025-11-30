@@ -3,7 +3,7 @@ import WeatherWidget from "./WeatherWidget"; // <-- import weather component
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [zip, setZip] = useState<string>("");
+    const [, setZip] = useState<string>("");
 
     useEffect(() => {
         const savedZip = localStorage.getItem("userZip");

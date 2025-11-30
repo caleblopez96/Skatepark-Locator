@@ -26,7 +26,7 @@ export default function WeatherWidget() {
             },
             (err) => {
                 setLocationDenied(true);
-                setError("Location access denied");
+                setError("Location access denied" + { err });
                 setLoading(false);
             }
         );
