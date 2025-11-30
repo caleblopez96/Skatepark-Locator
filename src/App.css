@@ -3,5 +3,11 @@
 #root {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0; /* No padding on mobile */
+}
+
+@media (min-width: 768px) {
+    #root {
+        padding: 0 2rem; /* Add padding back on tablets and up */
+    }
 }

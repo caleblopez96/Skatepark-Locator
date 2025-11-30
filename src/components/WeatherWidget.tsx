@@ -85,7 +85,7 @@ export default function WeatherWidget() {
         return (
             <div className="flex items-center gap-2 text-white">
                 <span className="text-2xl">{icon}</span>
-                <span className="text-lg font-medium">{temp}°F</span>
+                <span className="text-lg font-medium text-gray-900">{temp}°F</span>
             </div>
         );
     }
