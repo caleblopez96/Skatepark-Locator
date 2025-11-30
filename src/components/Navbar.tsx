@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import WeatherWidget from "./WeatherWidget"; // <-- import weather component
+import WeatherWidget from "./WeatherWidget";
 
-const Navbar = () => {
+interface NavbarProps {
+    onOpenFavorites: () => void;
+}
+
+const Navbar = ({ onOpenFavorites }: NavbarProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [, setZip] = useState<string>("");
+    const [favoritesCount, setFavoritesCount] = useState(0);
 
     useEffect(() => {
         const savedZip = localStorage.getItem("userZip");
@@ -29,7 +34,32 @@ const Navbar = () => {
                 });
             }
         }
+
+        // load the count of favd parkss
+        updateFavoritesCount();
+
+        // listen for storage changes and favorie removes
+        const handleStorageChange = () => updateFavoritesCount();
+        const handleFavoriteRemoved = () => updateFavoritesCount();
+
+        window.addEventListener("storage", handleStorageChange);
+        window.addEventListener("favoriteRemoved", handleFavoriteRemoved);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+            window.removeEventListener("favoriteRemoved", handleFavoriteRemoved);
+        };
     }, []);
+
+    const updateFavoritesCount = () => {
+        const stored = localStorage.getItem("favoritedParks");
+        if (stored) {
+            const favoriteIds: number[] = JSON.parse(stored);
+            setFavoritesCount(favoriteIds.length);
+        } else {
+            setFavoritesCount(0);
+        }
+    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -37,11 +67,26 @@ const Navbar = () => {
 
     const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
         e.preventDefault();
+
+        // if home just scroll to top
+        if (sectionId === "home") {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            setIsMenuOpen(false);
+            return;
+        }
+
         const element = document.getElementById(sectionId);
         if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-        setIsMenuOpen(false); // Close mobile menu after clicking
+        setIsMenuOpen(false);
+    };
+
+    const handleFavoritesClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        onOpenFavorites();
+        setIsMenuOpen(false);
+        updateFavoritesCount();
     };
 
     return (
@@ -49,7 +94,7 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="text-gray-900 text-xl font-bold">Skatepark Finder</div>
 
-                {/* Desktop Nav */}
+                {/* desktop nav */}
                 <div className="hidden md:flex items-center gap-6 text-white">
                     <a href="#home" onClick={(e) => scrollToSection(e, "home")} className="hover:text-gray-200 transition text-gray-900">
                         Home
@@ -61,24 +106,25 @@ const Navbar = () => {
                     >
                         Locator
                     </a>
-                    <a
-                        href="#favorites"
-                        onClick={(e) => scrollToSection(e, "favorites")}
-                        className="hover:text-gray-200 transition text-gray-900"
-                    >
+                    <a href="#favorites" onClick={handleFavoritesClick} className="hover:text-gray-200 transition text-gray-900 relative">
                         My Parks
+                        {favoritesCount > 0 && (
+                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                                {favoritesCount}
+                            </span>
+                        )}
                     </a>
 
                     <WeatherWidget />
                 </div>
 
-                {/* Mobile menu toggle */}
+                {/* menu toggle for mobile */}
                 <button onClick={toggleMenu} className="md:hidden text-gray-900 text-3xl focus:outline-none" aria-label="Toggle menu">
                     {isMenuOpen ? "✕" : "☰"}
                 </button>
             </div>
 
-            {/* Mobile dropdown */}
+            {/* mobile dropdown */}
             {isMenuOpen && (
                 <div className="md:hidden mt-4 flex flex-col space-y-3 p-4 rounded">
                     <a
@@ -97,13 +143,18 @@ const Navbar = () => {
                     </a>
                     <a
                         href="#favorites"
-                        onClick={(e) => scrollToSection(e, "favorites")}
-                        className="text-gray-900 hover:text-gray-200 transition py-2"
+                        onClick={handleFavoritesClick}
+                        className="text-gray-900 hover:text-gray-200 transition py-2 flex items-center gap-2"
                     >
                         My Parks
+                        {favoritesCount > 0 && (
+                            <span className="bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                                {favoritesCount}
+                            </span>
+                        )}
                     </a>
 
-                    {/* Weather widget inside mobile dropdown */}
+                    {/* mobile weather widg */}
                     <div className="pt-2 border-t border-gray-700">
                         <WeatherWidget />
                     </div>

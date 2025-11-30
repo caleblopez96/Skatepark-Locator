@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Map from "../components/Map";
-import { skateparks } from "../parkData"; // Import the data
+import { skateparks } from "../parkData";
 
 interface ParkInteraction {
     liked: boolean;
@@ -14,12 +14,35 @@ export default function Skateparks() {
     const parksPerPage = 6;
 
     useEffect(() => {
-        // Initialize interactions
+        // Load interactions from localStorage
+        const storedFavorites = localStorage.getItem("favoritedParks");
+        const favoriteIds: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
+
         const initialInteractions: Record<number, ParkInteraction> = {};
         skateparks.forEach((park) => {
-            initialInteractions[park.id] = { liked: false, disliked: false, favorited: false };
+            initialInteractions[park.id] = {
+                liked: false,
+                disliked: false,
+                favorited: favoriteIds.includes(park.id),
+            };
         });
         setInteractions(initialInteractions);
+
+        // Listen for favorite removals from the panel
+        const handleFavoriteRemoved = (event: Event) => {
+            const customEvent = event as CustomEvent<{ parkId: number }>;
+            const { parkId } = customEvent.detail;
+            setInteractions((prev) => ({
+                ...prev,
+                [parkId]: {
+                    ...prev[parkId],
+                    favorited: false,
+                },
+            }));
+        };
+
+        window.addEventListener("favoriteRemoved", handleFavoriteRemoved);
+        return () => window.removeEventListener("favoriteRemoved", handleFavoriteRemoved);
     }, []);
 
     const toggleLike = (parkId: number) => {
@@ -45,13 +68,42 @@ export default function Skateparks() {
     };
 
     const toggleHeart = (parkId: number) => {
-        setInteractions((prev) => ({
-            ...prev,
-            [parkId]: {
-                ...prev[parkId],
-                favorited: !prev[parkId]?.favorited,
-            },
-        }));
+        setInteractions((prev) => {
+            const newFavorited = !prev[parkId]?.favorited;
+
+            // Update localStorage
+            const storedFavorites = localStorage.getItem("favoritedParks");
+            const favoriteIds: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
+
+            if (newFavorited) {
+                // Add to favorites
+                if (!favoriteIds.includes(parkId)) {
+                    favoriteIds.push(parkId);
+                }
+            } else {
+                // Remove from favorites
+                const index = favoriteIds.indexOf(parkId);
+                if (index > -1) {
+                    favoriteIds.splice(index, 1);
+                }
+            }
+
+            localStorage.setItem("favoritedParks", JSON.stringify(favoriteIds));
+
+            // Dispatch storage event for navbar to update count
+            // Use setTimeout to avoid updating during render
+            setTimeout(() => {
+                window.dispatchEvent(new Event("storage"));
+            }, 0);
+
+            return {
+                ...prev,
+                [parkId]: {
+                    ...prev[parkId],
+                    favorited: newFavorited,
+                },
+            };
+        });
     };
 
     const indexOfLastPark = currentPage * parksPerPage;
