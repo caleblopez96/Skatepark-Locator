@@ -8,7 +8,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-red-500 p-4">
+        <nav className="p-4">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="text-white text-xl font-bold">Park Finder</div>
 
