@@ -15,12 +15,8 @@ const Navbar = () => {
                     const { latitude, longitude } = position.coords;
                     try {
                         const response = await fetch(
-                            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`,
-                            {
-                                headers: {
-                                    "User-Agent": "SkateboardLocator/1.0",
-                                },
-                            }
+                            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en
+`
                         );
                         const data = await response.json();
                         const userZip = data.address?.postcode || "";
