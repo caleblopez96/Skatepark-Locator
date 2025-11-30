@@ -62,7 +62,7 @@ export default function WeatherWidget() {
     }
 
     if (loading) {
-        return <div className="text-white text-sm">Loading weather...</div>;
+        return <div className="text-gray-800 text-sm">Loading weather...</div>;
     }
 
     if (error) {

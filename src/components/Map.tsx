@@ -4,10 +4,16 @@ import { skateparks } from "../parkData";
 
 export default function SkateparkMap() {
     return (
-        <section className="w-full bg-gray-100 py-8">
+        <section className="w-full bg-gray-100 py-8 relative z-0">
             <div className="max-w-7xl mx-auto mb-20">
-                <div className="w-full h-96 rounded-xl overflow-hidden shadow-lg border border-gray-300">
-                    <MapContainer center={[33.4484, -112.074]} zoom={9} scrollWheelZoom={false} className="w-full h-full">
+                <div className="w-full h-96 rounded-xl overflow-hidden shadow-lg border border-gray-300 relative z-0">
+                    <MapContainer
+                        center={[33.4484, -112.074]}
+                        zoom={9}
+                        scrollWheelZoom={false}
+                        className="w-full h-full z-0"
+                        style={{ zIndex: 0 }}
+                    >
                         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
                         {skateparks.map((park) => (

@@ -15,8 +15,7 @@ const Navbar = () => {
                     const { latitude, longitude } = position.coords;
                     try {
                         const response = await fetch(
-                            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en
-`
+                            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
                         );
                         const data = await response.json();
                         const userZip = data.address?.postcode || "";
@@ -36,20 +35,37 @@ const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+        e.preventDefault();
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        setIsMenuOpen(false); // Close mobile menu after clicking
+    };
+
     return (
-        <nav className="p-4 bg-gray-300 ">
+        <nav className="p-4 bg-gray-300 sticky top-0 z-50">
             <div className="max-w-7xl mx-auto flex justify-between items-center">
                 <div className="text-gray-900 text-xl font-bold">Skatepark Finder</div>
 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-6 text-white">
-                    <a href="#home" className="hover:text-gray-200 transition text-gray-900">
+                    <a href="#home" onClick={(e) => scrollToSection(e, "home")} className="hover:text-gray-200 transition text-gray-900">
                         Home
                     </a>
-                    <a href="#locator" className="hover:text-gray-200 transition text-gray-900">
+                    <a
+                        href="#locator"
+                        onClick={(e) => scrollToSection(e, "locator")}
+                        className="hover:text-gray-200 transition text-gray-900"
+                    >
                         Locator
                     </a>
-                    <a href="#favorites" className="hover:text-gray-200 transition text-gray-900">
+                    <a
+                        href="#favorites"
+                        onClick={(e) => scrollToSection(e, "favorites")}
+                        className="hover:text-gray-200 transition text-gray-900"
+                    >
                         My Parks
                     </a>
 
@@ -65,13 +81,25 @@ const Navbar = () => {
             {/* Mobile dropdown */}
             {isMenuOpen && (
                 <div className="md:hidden mt-4 flex flex-col space-y-3 p-4 rounded">
-                    <a href="#home" className="text-gray-900 hover:text-gray-200 transition py-2" onClick={() => setIsMenuOpen(false)}>
+                    <a
+                        href="#home"
+                        onClick={(e) => scrollToSection(e, "home")}
+                        className="text-gray-900 hover:text-gray-200 transition py-2"
+                    >
                         Home
                     </a>
-                    <a href="#locator" className="text-gray-900 hover:text-gray-200 transition py-2" onClick={() => setIsMenuOpen(false)}>
+                    <a
+                        href="#locator"
+                        onClick={(e) => scrollToSection(e, "locator")}
+                        className="text-gray-900 hover:text-gray-200 transition py-2"
+                    >
                         Locator
                     </a>
-                    <a href="#favorites" className="text-gray-900 hover:text-gray-200 transition py-2" onClick={() => setIsMenuOpen(false)}>
+                    <a
+                        href="#favorites"
+                        onClick={(e) => scrollToSection(e, "favorites")}
+                        className="text-gray-900 hover:text-gray-200 transition py-2"
+                    >
                         My Parks
                     </a>
 
