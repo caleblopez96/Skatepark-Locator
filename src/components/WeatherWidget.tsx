@@ -10,10 +10,12 @@ export default function WeatherWidget() {
         requestLocation();
     }, []);
 
+    // get user location
     function requestLocation() {
         setLoading(true);
         setError("");
 
+        // if geolocation not allowed
         if (!navigator.geolocation) {
             setError("Geolocation not supported");
             setLoading(false);

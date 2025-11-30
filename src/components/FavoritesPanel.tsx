@@ -31,6 +31,7 @@ export default function FavoritesPanel({ isOpen, onClose }: FavoritesPanelProps)
             const updated = favoriteIds.filter((id) => id !== parkId);
             localStorage.setItem("favoritedParks", JSON.stringify(updated));
             setFavoritedParks(favoritedParks.filter((park) => park.id !== parkId));
+
             // create an event to update Skateparks to keep everything in sync
             window.dispatchEvent(new CustomEvent("favoriteRemoved", { detail: { parkId } }));
         }

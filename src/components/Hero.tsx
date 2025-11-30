@@ -15,7 +15,7 @@ export default function Hero() {
     return (
         <section id="home" className="w-full bg-gray-900 text-white py-20 px-6 md:px-12">
             <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-                {/* LEFT SIDE — TEXT */}
+                {/* left */}
                 <div className="space-y-6">
                     <h1 className="text-4xl md:text-5xl font-bold leading-tight">Find Skateparks Near You</h1>
 
@@ -31,8 +31,7 @@ export default function Hero() {
                         Explore Parks
                     </a>
                 </div>
-
-                {/* RIGHT SIDE — SWIPER CAROUSEL */}
+                {/* right side carousel */}
                 <div className="w-full h-64 md:h-80 rounded-xl shadow-lg border border-gray-700 overflow-hidden">
                     <Swiper
                         modules={[Autoplay, Pagination]}
@@ -41,7 +40,6 @@ export default function Hero() {
                         loop={true}
                         className="h-full"
                     >
-                        {/* SLIDE 1 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic1} className="w-full h-full object-cover" alt="Espee Skatepark" />
@@ -50,8 +48,6 @@ export default function Hero() {
                                 </div>
                             </div>
                         </SwiperSlide>
-
-                        {/* SLIDE 2 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic2} className="w-full h-full object-cover" alt="Freestone Skatepark" />
@@ -60,8 +56,6 @@ export default function Hero() {
                                 </div>
                             </div>
                         </SwiperSlide>
-
-                        {/* SLIDE 3 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic3} className="w-full h-full object-cover" alt="Mansel Skatepark" />
@@ -70,8 +64,6 @@ export default function Hero() {
                                 </div>
                             </div>
                         </SwiperSlide>
-
-                        {/* SLIDE 4 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic4} className="w-full h-full object-cover" alt="Chandler Skatepark" />
@@ -80,8 +72,6 @@ export default function Hero() {
                                 </div>
                             </div>
                         </SwiperSlide>
-
-                        {/* SLIDE 5 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic5} className="w-full h-full object-cover" alt="Tempe Skatepark" />
@@ -90,8 +80,6 @@ export default function Hero() {
                                 </div>
                             </div>
                         </SwiperSlide>
-
-                        {/* SLIDE 6 */}
                         <SwiperSlide>
                             <div className="relative w-full h-full group">
                                 <img src={pic6} className="w-full h-full object-cover" alt="Apache Junction Skatepark" />

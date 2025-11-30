@@ -69,6 +69,7 @@ const Navbar = ({ onOpenFavorites }: NavbarProps) => {
         e.preventDefault();
 
         // if home just scroll to top
+
         if (sectionId === "home") {
             window.scrollTo({ top: 0, behavior: "smooth" });
             setIsMenuOpen(false);

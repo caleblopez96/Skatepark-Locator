@@ -14,7 +14,7 @@ export default function Skateparks() {
     const parksPerPage = 6;
 
     useEffect(() => {
-        // Load interactions from localStorage
+        // load favs from localStorage
         const storedFavorites = localStorage.getItem("favoritedParks");
         const favoriteIds: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
 
@@ -28,7 +28,7 @@ export default function Skateparks() {
         });
         setInteractions(initialInteractions);
 
-        // Listen for favorite removals from the panel
+        // listen for favorite removals from the panel
         const handleFavoriteRemoved = (event: Event) => {
             const customEvent = event as CustomEvent<{ parkId: number }>;
             const { parkId } = customEvent.detail;
@@ -71,17 +71,17 @@ export default function Skateparks() {
         setInteractions((prev) => {
             const newFavorited = !prev[parkId]?.favorited;
 
-            // Update localStorage
+            // update localStorage
             const storedFavorites = localStorage.getItem("favoritedParks");
             const favoriteIds: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
 
             if (newFavorited) {
-                // Add to favorites
+                // add to favorites
                 if (!favoriteIds.includes(parkId)) {
                     favoriteIds.push(parkId);
                 }
             } else {
-                // Remove from favorites
+                // remove from favorites
                 const index = favoriteIds.indexOf(parkId);
                 if (index > -1) {
                     favoriteIds.splice(index, 1);
@@ -90,7 +90,7 @@ export default function Skateparks() {
 
             localStorage.setItem("favoritedParks", JSON.stringify(favoriteIds));
 
-            // Dispatch storage event for navbar to update count
+            // send event for navbar to update count
             // Use setTimeout to avoid updating during render
             setTimeout(() => {
                 window.dispatchEvent(new Event("storage"));
