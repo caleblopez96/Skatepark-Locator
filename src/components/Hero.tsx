@@ -1,8 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
+
 import pic1 from "../assets/EspeePark.avif";
 import pic2 from "../assets/FreeStonePark.webp";
 import pic3 from "../assets/ManselPark.jpg";
+import pic4 from "../assets/ChandlerSkatepark.webp";
+import pic5 from "../assets/TempeSkatepark.webp";
+import pic6 from "../assets/AJS.webp";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -37,16 +41,64 @@ export default function Hero() {
                         loop={true}
                         className="h-full"
                     >
+                        {/* SLIDE 1 */}
                         <SwiperSlide>
-                            <img src={pic1} className="w-full h-full object-cover" alt="tes" />
+                            <div className="relative w-full h-full group">
+                                <img src={pic1} className="w-full h-full object-cover" alt="Espee Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Espee Skatepark</span>
+                                </div>
+                            </div>
                         </SwiperSlide>
 
+                        {/* SLIDE 2 */}
                         <SwiperSlide>
-                            <img src={pic2} className="w-full h-full object-cover" alt="test" />
+                            <div className="relative w-full h-full group">
+                                <img src={pic2} className="w-full h-full object-cover" alt="Freestone Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Freestone Skatepark</span>
+                                </div>
+                            </div>
                         </SwiperSlide>
 
+                        {/* SLIDE 3 */}
                         <SwiperSlide>
-                            <img src={pic3} className="w-full h-full object-cover" alt="test" />
+                            <div className="relative w-full h-full group">
+                                <img src={pic3} className="w-full h-full object-cover" alt="Mansel Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Mansel Skatepark</span>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+
+                        {/* SLIDE 4 */}
+                        <SwiperSlide>
+                            <div className="relative w-full h-full group">
+                                <img src={pic4} className="w-full h-full object-cover" alt="Chandler Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Chandler Skatepark</span>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+
+                        {/* SLIDE 5 */}
+                        <SwiperSlide>
+                            <div className="relative w-full h-full group">
+                                <img src={pic5} className="w-full h-full object-cover" alt="Tempe Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Tempe Skatepark</span>
+                                </div>
+                            </div>
+                        </SwiperSlide>
+
+                        {/* SLIDE 6 */}
+                        <SwiperSlide>
+                            <div className="relative w-full h-full group">
+                                <img src={pic6} className="w-full h-full object-cover" alt="Apache Junction Skatepark" />
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span className="text-xl font-semibold">Apache Junction Skatepark</span>
+                                </div>
+                            </div>
                         </SwiperSlide>
                     </Swiper>
                 </div>
