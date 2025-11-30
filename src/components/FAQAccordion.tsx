@@ -18,9 +18,9 @@ export default function FAQAccordion() {
     }, []);
 
     return (
-        <section className="w-full bg-gray-100 py-16 px-6 md:px-12">
+        <section className="w-full bg-gray-900 py-16 px-6 md:px-12">
             <div className="max-w-3xl mx-auto">
-                <h2 className="text-3xl font-bold mb-8 text-gray-900 text-center">Frequently Asked Questions</h2>
+                <h2 className="text-3xl font-bold mb-8 text-gray-200 text-center">Frequently Asked Questions</h2>
 
                 <div id="faq-accordion" className="bg-white rounded-lg shadow p-6 border border-gray-300">
                     <h3 className="text-xl font-semibold">What is this project?</h3>
