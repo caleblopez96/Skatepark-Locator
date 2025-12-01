@@ -71,30 +71,21 @@ export default function Skateparks() {
         setInteractions((prev) => {
             const newFavorited = !prev[parkId]?.favorited;
 
-            // update localStorage
-            const storedFavorites = localStorage.getItem("favoritedParks");
-            const favoriteIds: number[] = storedFavorites ? JSON.parse(storedFavorites) : [];
+            const stored = localStorage.getItem("favoritedParks");
+            let favoriteNames: string[] = stored ? JSON.parse(stored) : [];
+
+            const park = skateparks.find((p) => p.id === parkId);
+            if (!park) return prev;
 
             if (newFavorited) {
-                // add to favorites
-                if (!favoriteIds.includes(parkId)) {
-                    favoriteIds.push(parkId);
+                if (!favoriteNames.includes(park.name)) {
+                    favoriteNames.push(park.name);
                 }
             } else {
-                // remove from favorites
-                const index = favoriteIds.indexOf(parkId);
-                if (index > -1) {
-                    favoriteIds.splice(index, 1);
-                }
+                favoriteNames = favoriteNames.filter((name) => name !== park.name);
             }
 
-            localStorage.setItem("favoritedParks", JSON.stringify(favoriteIds));
-
-            // send event for navbar to update count
-            // Use setTimeout to avoid updating during render
-            setTimeout(() => {
-                window.dispatchEvent(new Event("storage"));
-            }, 0);
+            localStorage.setItem("favoritedParks", JSON.stringify(favoriteNames));
 
             return {
                 ...prev,
