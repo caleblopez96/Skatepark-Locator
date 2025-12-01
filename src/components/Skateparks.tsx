@@ -68,33 +68,40 @@ export default function Skateparks() {
     };
 
     const toggleHeart = (parkId: number) => {
-        setInteractions((prev) => {
-            const newFavorited = !prev[parkId]?.favorited;
+        const stored = localStorage.getItem("favoritedParks");
+        let favoriteIds: number[] = stored ? JSON.parse(stored) : [];
 
-            const stored = localStorage.getItem("favoritedParks");
-            let favoriteNames: string[] = stored ? JSON.parse(stored) : [];
+        const park = skateparks.find((p) => p.id === parkId);
+        if (!park) return;
 
-            const park = skateparks.find((p) => p.id === parkId);
-            if (!park) return prev;
+        const newFavorited = !interactions[parkId]?.favorited;
 
-            if (newFavorited) {
-                if (!favoriteNames.includes(park.name)) {
-                    favoriteNames.push(park.name);
-                }
-            } else {
-                favoriteNames = favoriteNames.filter((name) => name !== park.name);
+        if (newFavorited) {
+            if (!favoriteIds.includes(parkId)) {
+                favoriteIds.push(parkId);
             }
+        } else {
+            favoriteIds = favoriteIds.filter((id) => id !== parkId);
+        }
 
-            localStorage.setItem("favoritedParks", JSON.stringify(favoriteNames));
+        // Store IDs (for the code to work)
+        localStorage.setItem("favoritedParks", JSON.stringify(favoriteIds));
 
-            return {
-                ...prev,
-                [parkId]: {
-                    ...prev[parkId],
-                    favorited: newFavorited,
-                },
-            };
-        });
+        // Store names separately (for you to read in localStorage)
+        const favoriteNames = favoriteIds.map((id) => skateparks.find((p) => p.id === id)?.name).filter(Boolean);
+        localStorage.setItem("favoritedParkNames", JSON.stringify(favoriteNames));
+
+        // Update state
+        setInteractions((prev) => ({
+            ...prev,
+            [parkId]: {
+                ...prev[parkId],
+                favorited: newFavorited,
+            },
+        }));
+
+        // Dispatch event AFTER state update (outside of setState)
+        window.dispatchEvent(new CustomEvent("favoriteToggled"));
     };
 
     const indexOfLastPark = currentPage * parksPerPage;
@@ -151,7 +158,7 @@ export default function Skateparks() {
                                 {park.bikeFriendly ? (
                                     <>
                                         <span className="text-gray-600">Bike Friendly</span>
-                                        <span className="text-green-600 font-bold">✔</span>
+                                        <span className="text-green-600 font-bold">✓</span>
                                     </>
                                 ) : (
                                     <>

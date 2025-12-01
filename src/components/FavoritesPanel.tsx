@@ -29,7 +29,15 @@ export default function FavoritesPanel({ isOpen, onClose }: FavoritesPanelProps)
         if (stored) {
             const favoriteIds: number[] = JSON.parse(stored);
             const updated = favoriteIds.filter((id) => id !== parkId);
+
+            // Update IDs in localStorage
             localStorage.setItem("favoritedParks", JSON.stringify(updated));
+
+            // Update names in localStorage too
+            const favoriteNames = updated.map((id) => skateparks.find((p) => p.id === id)?.name).filter(Boolean);
+            localStorage.setItem("favoritedParkNames", JSON.stringify(favoriteNames));
+
+            // Update local state
             setFavoritedParks(favoritedParks.filter((park) => park.id !== parkId));
 
             // create an event to update Skateparks to keep everything in sync
@@ -97,7 +105,7 @@ export default function FavoritesPanel({ isOpen, onClose }: FavoritesPanelProps)
                                             {park.bikeFriendly ? (
                                                 <>
                                                     <span className="text-gray-600">Bike Friendly</span>
-                                                    <span className="text-green-600 font-bold">✔</span>
+                                                    <span className="text-green-600 font-bold">✓</span>
                                                 </>
                                             ) : (
                                                 <>
