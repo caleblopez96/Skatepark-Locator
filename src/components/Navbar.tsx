@@ -9,6 +9,16 @@ const Navbar = ({ onOpenFavorites }: NavbarProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [favoritesCount, setFavoritesCount] = useState(0);
 
+    const updateFavoritesCount = () => {
+        const stored = localStorage.getItem("favoritedParks");
+        if (stored) {
+            const favoriteIds: number[] = JSON.parse(stored);
+            setFavoritesCount(favoriteIds.length);
+        } else {
+            setFavoritesCount(0);
+        }
+    };
+
     useEffect(() => {
         // load the count of favd parks
         updateFavoritesCount();
@@ -28,16 +38,6 @@ const Navbar = ({ onOpenFavorites }: NavbarProps) => {
             window.removeEventListener("favoriteToggled", handleFavoriteToggled);
         };
     }, []);
-
-    const updateFavoritesCount = () => {
-        const stored = localStorage.getItem("favoritedParks");
-        if (stored) {
-            const favoriteIds: number[] = JSON.parse(stored);
-            setFavoritesCount(favoriteIds.length);
-        } else {
-            setFavoritesCount(0);
-        }
-    };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
