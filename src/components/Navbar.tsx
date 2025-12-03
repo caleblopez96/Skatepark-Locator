@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WeatherWidget from "./WeatherWidget";
 
 interface NavbarProps {
@@ -7,52 +7,27 @@ interface NavbarProps {
 
 const Navbar = ({ onOpenFavorites }: NavbarProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    // const [, setZip] = useState<string>("");
     const [favoritesCount, setFavoritesCount] = useState(0);
 
-    // useEffect(() => {
-    //     const savedZip = localStorage.getItem("userZip");
-    //     if (savedZip) {
-    //         setZip(savedZip);
-    //     } else {
-    //         if (navigator.geolocation) {
-    //             navigator.geolocation.getCurrentPosition(async (position) => {
-    //                 const { latitude, longitude } = position.coords;
-    //                 try {
-    //                     const response = await fetch(
-    //                         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
-    //                     );
-    //                     const data = await response.json();
-    //                     const userZip = data.address?.postcode || "";
-    //                     if (userZip) {
-    //                         setZip(userZip);
-    //                         localStorage.setItem("userZip", userZip);
-    //                     }
-    //                 } catch (error) {
-    //                     console.error("Error fetching zip code:", error);
-    //                 }
-    //             });
-    //         }
-    //     }
+    useEffect(() => {
+        // load the count of favd parks
+        updateFavoritesCount();
 
-    //     // load the count of favd parks
-    //     updateFavoritesCount();
+        // listen for storage changes, favorite removes, AND favorite toggles
+        const handleStorageChange = () => updateFavoritesCount();
+        const handleFavoriteRemoved = () => updateFavoritesCount();
+        const handleFavoriteToggled = () => updateFavoritesCount();
 
-    //     // listen for storage changes, favorite removes, AND favorite toggles
-    //     const handleStorageChange = () => updateFavoritesCount();
-    //     const handleFavoriteRemoved = () => updateFavoritesCount();
-    //     const handleFavoriteToggled = () => updateFavoritesCount();
+        window.addEventListener("storage", handleStorageChange);
+        window.addEventListener("favoriteRemoved", handleFavoriteRemoved);
+        window.addEventListener("favoriteToggled", handleFavoriteToggled);
 
-    //     window.addEventListener("storage", handleStorageChange);
-    //     window.addEventListener("favoriteRemoved", handleFavoriteRemoved);
-    //     window.addEventListener("favoriteToggled", handleFavoriteToggled);
-
-    //     return () => {
-    //         window.removeEventListener("storage", handleStorageChange);
-    //         window.removeEventListener("favoriteRemoved", handleFavoriteRemoved);
-    //         window.removeEventListener("favoriteToggled", handleFavoriteToggled);
-    //     };
-    // }, []);
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+            window.removeEventListener("favoriteRemoved", handleFavoriteRemoved);
+            window.removeEventListener("favoriteToggled", handleFavoriteToggled);
+        };
+    }, []);
 
     const updateFavoritesCount = () => {
         const stored = localStorage.getItem("favoritedParks");
